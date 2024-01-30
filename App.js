@@ -1,64 +1,44 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useCallback } from "react";
 
-import Button from "./components/Button";
-import ImageViewer from "./components/ImageViewer";
+import HomeScreen from "./components/HomeScreen";
+import SelectionScreen from "./components/SelectionScreen";
 
-const landingImage = require("./assets/cocktail.jpg");
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [fontsLoaded, fontError] = useFonts({
+    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <ImageViewer imageSource={landingImage} />
-      </View>
-      <View style={styles.footerContainer}>
-        <View style={styles.footerText}>
-          <Text style={styles.heading}>Welcome to cocktail</Text>
-          <Text style={styles.subHeading}>
-            Select an alcohol type and receive a recipe
-          </Text>
-        </View>
-        <Button buttonText={"Get Started"} />
-      </View>
-      <StatusBar style="light" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Selection"
+          component={SelectionScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  footerContainer: {
-    backgroundColor: "#D9D9D9",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    paddingBottom: 60,
-  },
-  footerText: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: "regular",
-    color: "#1A1C29",
-    paddingBottom: 10,
-  },
-  subHeading: {
-    color: "#797979",
-    fontSize: 15,
-  },
-  imageContainer: {
-    flex: 2,
-    backgroundColor: "#797979",
-    width: "100%",
-  },
-});

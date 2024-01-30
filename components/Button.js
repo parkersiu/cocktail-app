@@ -5,7 +5,7 @@ export default function Button({ buttonText, action }) {
     <View style={[styles.buttonContainer]}>
       <Pressable
         style={[styles.button, { backgroundColor: "#1A1C29" }]}
-        onPress={() => alert("You pressed a button")}
+        onPress={action}
       >
         <Text style={styles.buttonLabel}>{buttonText}</Text>
       </Pressable>
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   buttonLabel: {
     color: "#fff",
     fontSize: 20,
-    fontStyle: "bold",
+    fontWeight: "bold",
+    fontFamily: "Montserrat-Bold",
   },
 });

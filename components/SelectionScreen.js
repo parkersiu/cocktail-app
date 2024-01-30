@@ -1,0 +1,84 @@
+import { View, Text, StyleSheet, Image } from "react-native";
+import { StatusBar } from "expo-status-bar";
+
+import Button from "./Button";
+
+export default function SelectionScreen() {
+  const buttonAction = () => alert("You pressed search");
+
+  const alcohols = [
+    { type: "Vodka", image: require("../assets/cocktail.jpg") },
+    { type: "Gin", image: require("../assets/cocktail.jpg") },
+    { type: "Whiskey", image: require("../assets/cocktail.jpg") },
+    { type: "Tequila", image: require("../assets/cocktail.jpg") },
+    { type: "Rum", image: require("../assets/cocktail.jpg") },
+    { type: "Brandy", image: require("../assets/cocktail.jpg") },
+  ];
+  return (
+    <View style={styles.container}>
+      <View style={styles.headingContainer}>
+        <Text style={styles.heading}>
+          Select which alcohol you would like to use
+        </Text>
+      </View>
+      <View style={styles.alcoholsContainer}>
+        {alcohols.map((alcohol, i) => (
+          <View key={i} style={styles.itemContainer}>
+            <Image source={alcohol.image} style={styles.alcoholImage} />
+            <Text style={styles.alcoholText}>{alcohol.type}</Text>
+          </View>
+        ))}
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button buttonText={"Search"} action={buttonAction} />
+      </View>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#D9D9D9",
+  },
+  headingContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingHorizontal: 70,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "Montserrat-Bold",
+  },
+  alcoholsContainer: {
+    flex: 4,
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  itemContainer: {
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  alcoholImage: {
+    height: 140,
+    width: 140,
+    borderRadius: "100%",
+  },
+  alcoholText: {
+    fontFamily: "Montserrat-Bold",
+    fontStyle: "normal",
+    color: "#000",
+    paddingTop: 6,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
