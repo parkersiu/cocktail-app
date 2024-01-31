@@ -7,6 +7,7 @@ import { useCallback } from "react";
 
 import HomeScreen from "./components/HomeScreen";
 import SelectionScreen from "./components/SelectionScreen";
+import CocktailMainScreen from "./components/CocktailMainScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,11 @@ export default function App() {
         <Stack.Screen
           name="Selection"
           component={SelectionScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CocktailMain"
+          component={CocktailMainScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

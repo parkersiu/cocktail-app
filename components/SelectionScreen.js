@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 
 import Button from "./Button";
 
-export default function SelectionScreen() {
-  const buttonAction = () => alert("You pressed search");
+export default function SelectionScreen({ navigation }) {
+  const [active, setActive] = useState(null);
 
   const alcohols = [
     { type: "Vodka", image: require("../assets/cocktail.jpg") },
@@ -14,6 +15,19 @@ export default function SelectionScreen() {
     { type: "Rum", image: require("../assets/cocktail.jpg") },
     { type: "Brandy", image: require("../assets/cocktail.jpg") },
   ];
+
+  const buttonAction = () => {
+    if (active) {
+      navigation.navigate("CocktailMain");
+      setActive(null);
+    } else {
+      alert("Please make a selection");
+    }
+  };
+  const handleSelect = (index) => {
+    setActive(index);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
@@ -24,8 +38,17 @@ export default function SelectionScreen() {
       <View style={styles.alcoholsContainer}>
         {alcohols.map((alcohol, i) => (
           <View key={i} style={styles.itemContainer}>
-            <Image source={alcohol.image} style={styles.alcoholImage} />
-            <Text style={styles.alcoholText}>{alcohol.type}</Text>
+            <Pressable onPress={() => handleSelect(i)}>
+              <Image
+                source={alcohol.image}
+                style={
+                  active === i
+                    ? [styles.alcoholImage, styles.active]
+                    : [styles.alcoholImage]
+                }
+              />
+              <Text style={styles.alcoholText}>{alcohol.type}</Text>
+            </Pressable>
           </View>
         ))}
       </View>
@@ -68,17 +91,22 @@ const styles = StyleSheet.create({
   alcoholImage: {
     height: 140,
     width: 140,
-    borderRadius: "100%",
+    borderRadius: 100,
   },
   alcoholText: {
     fontFamily: "Montserrat-Bold",
     fontStyle: "normal",
     color: "#000",
     paddingTop: 6,
+    textAlign: "center",
   },
   buttonContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  active: {
+    borderColor: "green",
+    borderWidth: 5,
   },
 });
