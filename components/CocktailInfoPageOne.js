@@ -1,37 +1,44 @@
 import { View, Text, StyleSheet } from "react-native";
 
-const ingredients = [
-  {
-    ingredient: "Tequila",
-    measure: "1.5 oz",
-  },
-  {
-    ingredient: "Triple Sec",
-    measure: "0.5 oz",
-  },
-  {
-    ingredient: "Lime",
-    measure: "1 oz",
-  },
-  {
-    ingredient: "Salt",
-    measure: "",
-  },
-];
+let ingredients = [];
 
-export default function CocktailInfoPageOne() {
+function findIngredients(cocktail) {
+  // Loop through each property in the object
+  for (const key in cocktail) {
+    if (cocktail.hasOwnProperty(key)) {
+      // Check if the property starts with "strIngredient" and ends with a number
+      const ingredientMatch = key.match(/^strIngredient(\d+)$/);
+
+      if (ingredientMatch) {
+        let currentIngredient = cocktail[key];
+
+        // Check if the current ingredient is not null
+        if (currentIngredient !== null) {
+          // Extract the matched number and increment it by 1
+          const currentNumber = parseInt(ingredientMatch[1], 10);
+
+          // Construct the corresponding measure key
+          const measureKey = `strMeasure${currentNumber}`;
+
+          // Get the measure value
+          const measureValue = cocktail[measureKey] || "";
+
+          // Create an object and add it to the ingredients array
+          ingredients.push({
+            ingredient: currentIngredient,
+            measure: measureValue,
+          });
+        }
+      }
+    }
+  }
+}
+
+export default function CocktailInfoPageOne({ cocktail }) {
+  findIngredients(cocktail);
+
   return (
     <View>
-      <View style={styles.header}>
-        <Text style={[styles.headerText, styles.hederLeft]}>Vodka</Text>
-        <Text style={[styles.headerText, styles.headerRight]}>
-          Cocktail Glass
-        </Text>
-      </View>
-      <View style={styles.title}>
-        <Text style={styles.titleText}>Bloody Mary</Text>
-      </View>
-      <View style={styles.line} />
       <View style={styles.descriptionContainer}>
         <Text style={styles.descriptionHeader}>Description</Text>
         <Text style={styles.descriptionBody}>
@@ -46,7 +53,7 @@ export default function CocktailInfoPageOne() {
           <Text
             style={styles.ingredientsItems}
             key={i}
-          >{`\u2022 ${item.measure} ${item.ingredient}`}</Text>
+          >{`\u2022 ${item.measure}${item.ingredient}`}</Text>
         ))}
       </View>
     </View>
@@ -54,28 +61,6 @@ export default function CocktailInfoPageOne() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    paddingVertical: 10,
-  },
-  headerText: {
-    position: "absolute",
-    top: 15,
-    color: "#949598",
-    fontSize: 14,
-  },
-  headerLeft: {
-    left: 0,
-  },
-  headerRight: {
-    right: 0,
-  },
-  title: {
-    paddingTop: 40,
-  },
-  titleText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
   descriptionContainer: {
     paddingTop: 15,
   },
