@@ -1,11 +1,17 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useState, memo } from "react";
 
 import Button from "./Button";
 
-export default function SelectionScreen({ navigation }) {
-  const [active, setActive] = useState(null);
+export default memo(function SelectionScreen({
+  navigation,
+  setCocktail,
+  setAlcoholType,
+}) {
+  const [active, setActive] = useState(-1);
+
+  let data = [];
 
   const alcohols = [
     { type: "Vodka", image: require("../assets/cocktail.jpg") },
@@ -16,10 +22,42 @@ export default function SelectionScreen({ navigation }) {
     { type: "Brandy", image: require("../assets/cocktail.jpg") },
   ];
 
-  const buttonAction = () => {
-    if (active) {
+  const getCocktailByIngredient = async (alcohol) => {
+    try {
+      const response = await fetch(
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${alcohol}`
+      );
+      const json = await response.json();
+      data.push(json["drinks"]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getCocktailById = async (id) => {
+    try {
+      const response = await fetch(
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
+      );
+      const json = await response.json();
+      setCocktail(json["drinks"]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const randomAlcohol = (data) => {
+    return data[0][Math.floor(Math.random() * data.length)];
+  };
+
+  const buttonAction = async () => {
+    if (active > -1) {
+      await getCocktailByIngredient(alcohols[active]["type"]);
+      await getCocktailById(randomAlcohol(data)["idDrink"]);
+      setAlcoholType(alcohols[active]["type"]);
+      setActive(-1);
+      data = [];
       navigation.navigate("Cocktail");
-      setActive(null);
     } else {
       alert("Please make a selection");
     }
@@ -58,7 +96,7 @@ export default function SelectionScreen({ navigation }) {
       <StatusBar style="auto" />
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
