@@ -1,31 +1,16 @@
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 
 import HomeScreen from "./components/HomeScreen";
 import SelectionScreen from "./components/SelectionScreen";
-import CocktailMainScreen from "./components/CocktailMainScreen";
+import CocktailScreen from "./components/CocktailScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [fontsLoaded, fontError] = useFonts({
-    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -40,8 +25,8 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="CocktailMain"
-          component={CocktailMainScreen}
+          name="Cocktail"
+          component={CocktailScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

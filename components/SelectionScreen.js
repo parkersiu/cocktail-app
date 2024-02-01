@@ -18,7 +18,7 @@ export default function SelectionScreen({ navigation }) {
 
   const buttonAction = () => {
     if (active) {
-      navigation.navigate("CocktailMain");
+      navigation.navigate("Cocktail");
       setActive(null);
     } else {
       alert("Please make a selection");
@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-    fontFamily: "Montserrat-Bold",
   },
   alcoholsContainer: {
     flex: 4,
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   alcoholText: {
-    fontFamily: "Montserrat-Bold",
     fontStyle: "normal",
     color: "#000",
     paddingTop: 6,

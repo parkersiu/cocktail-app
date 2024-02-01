@@ -47,10 +47,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    fontFamily: "Montserrat-Bold",
   },
   heading: {
-    fontFamily: "Montserrat-Bold",
     fontSize: 24,
     fontWeight: "regular",
     color: "#1A1C29",
