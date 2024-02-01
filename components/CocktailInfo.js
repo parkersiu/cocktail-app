@@ -21,14 +21,6 @@ export default function CocktailInfo() {
     },
   ];
 
-  const renderList = ({ item }) => {
-    return (
-      <View>
-        <Text>{`\u2022 ${item.measure} ${item.ingredient}`}</Text>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.mainContainer}>
       <View style={styles.header}>
