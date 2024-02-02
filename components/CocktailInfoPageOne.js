@@ -36,6 +36,7 @@ function findIngredients(cocktail) {
 
 export default function CocktailInfoPageOne({ cocktail }) {
   findIngredients(cocktail);
+  console.log(cocktail);
 
   return (
     <View>
@@ -49,12 +50,14 @@ export default function CocktailInfoPageOne({ cocktail }) {
       <View style={styles.line} />
       <View style={styles.ingredientsContainer}>
         <Text style={styles.ingredientsHeader}>Ingredients</Text>
-        {ingredients.map((item, i) => (
-          <Text
-            style={styles.ingredientsItems}
-            key={i}
-          >{`\u2022 ${item.measure}${item.ingredient}`}</Text>
-        ))}
+        <View style={styles.itemsContainer}>
+          {ingredients.map((item, i) => (
+            <Text
+              style={styles.ingredientsItems}
+              key={i}
+            >{`\u2022 ${item.measure} ${item.ingredient}`}</Text>
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -79,10 +82,16 @@ const styles = StyleSheet.create({
     paddingBottom: 9,
     fontSize: 18,
   },
+  itemsContainer: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   ingredientsItems: {
     fontSize: 16,
     color: "#949598",
     lineHeight: 25,
+    width: "50%",
   },
   line: {
     paddingVertical: 10,
