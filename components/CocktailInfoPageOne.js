@@ -36,7 +36,6 @@ function findIngredients(cocktail) {
 
 export default function CocktailInfoPageOne({ cocktail }) {
   findIngredients(cocktail);
-  console.log(cocktail);
 
   return (
     <View>
