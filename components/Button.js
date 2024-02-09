@@ -1,11 +1,12 @@
 import { StyleSheet, View, Pressable, Text } from "react-native";
 
-export default function Button({ buttonText, action }) {
+export default function Button({ buttonText, action, disabled }) {
   return (
     <View style={[styles.buttonContainer]}>
       <Pressable
         style={[styles.button, { backgroundColor: "#1A1C29" }]}
         onPress={action}
+        disabled={false}
       >
         <Text style={styles.buttonLabel}>{buttonText}</Text>
       </Pressable>

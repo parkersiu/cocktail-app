@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { memo } from "react";
 
@@ -7,17 +7,13 @@ import ImageViewer from "./ImageViewer";
 
 const imageSource = require("../assets/cocktail.jpg");
 
-export default memo(function CocktailScreen({
-  navigation,
-  cocktail,
-  alcoholType,
-}) {
+export default memo(function CocktailScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <ImageViewer imageSource={imageSource} />
       </View>
-      <CocktailInfo cocktail={cocktail} alcoholType={alcoholType} />
+      <CocktailInfo />
       <StatusBar style="auto" />
     </View>
   );
