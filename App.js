@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import { Feather, FontAwesome6 } from "@expo/vector-icons";
+import Spinner from "react-native-loading-spinner-overlay";
 
 import { useCocktailStore } from "./store/store";
 import fetchCocktail from "./library/fetchCocktail";
@@ -16,17 +17,18 @@ import CocktailScreen from "./components/CocktailScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [alcohol, setCocktail, setCocktailData, setStatus] = useCocktailStore(
-    (state) => [
+  const [alcohol, setCocktail, setCocktailData, status, setStatus] =
+    useCocktailStore((state) => [
       state.alcohol,
       state.setCocktail,
       state.setCocktailData,
+      state.status,
       state.setStatus,
-    ]
-  );
+    ]);
 
   return (
     <NavigationContainer>
+      <Spinner visible={status === "pending" ? true : false} />
       <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
         <Stack.Screen
           name="Home"

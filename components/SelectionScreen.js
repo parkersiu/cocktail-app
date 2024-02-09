@@ -32,7 +32,6 @@ export default memo(function SelectionScreen({ navigation }) {
     state.status,
     state.setStatus,
   ]);
-  console.log("the status is: ", status);
 
   const alcohols = [
     { type: "Vodka", image: require("../assets/cocktail.jpg") },
