@@ -29,13 +29,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <Spinner visible={status === "pending" ? true : false} />
-      <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, gestureEnabled: false }}
         />
-        <Stack.Screen name="Selection" options={{ headerShown: false }}>
+        <Stack.Screen
+          name="Selection"
+          options={{ headerShown: false, gestureEnabled: false }}
+        >
           {(props) => <SelectionScreen navigation={props.navigation} />}
         </Stack.Screen>
         <Stack.Screen
