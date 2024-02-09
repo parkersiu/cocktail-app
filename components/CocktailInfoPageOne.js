@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { useEffect } from "react";
 
 import { useCocktailStore } from "../store/store";
 
 let ingredients = [];
 
 function findIngredients(cocktail) {
+  ingredients = [];
   // Loop through each property in the object
   for (const key in cocktail) {
     if (cocktail.hasOwnProperty(key)) {
@@ -38,7 +40,10 @@ function findIngredients(cocktail) {
 
 export default function CocktailInfoPageOne() {
   const cocktail = useCocktailStore((state) => state.cocktail);
-  findIngredients(cocktail);
+
+  useEffect(() => {
+    findIngredients(cocktail);
+  }, [cocktail]);
 
   return (
     <View>

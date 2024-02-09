@@ -48,13 +48,13 @@ export default memo(function SelectionScreen({ navigation }) {
       if (active > -1) {
         setIsDisabled(true);
         resetCocktailData();
+        setAlcohol(alcohols[active]["type"]);
         await fetchCocktail(
           alcohols[active]["type"],
           setCocktail,
           setCocktailData,
           setStatus
         );
-        setAlcohol(alcohols[active]["type"]);
         setActive(-1);
         setIsDisabled(false);
         navigation.navigate("Cocktail");

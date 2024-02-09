@@ -1,15 +1,4 @@
-/* export default async function fetchByIngredient(alcohol, setCocktailData) {
-  try {
-    const response = await fetch(
-      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${alcohol}`
-    );
-    const json = await response.json();
-    setCocktailData(json["drinks"]);
-  } catch (error) {
-    console.error(error);
-  }
-}
- */
+import { useCocktailStore } from "../store/store";
 
 export default async function fetchCocktail(
   alcohol,

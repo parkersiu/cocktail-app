@@ -5,6 +5,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import { Feather, FontAwesome6 } from "@expo/vector-icons";
 
+import { useCocktailStore } from "./store/store";
+import fetchCocktail from "./library/fetchCocktail";
+
 import NavHeader from "./components/NavHeader";
 import HomeScreen from "./components/HomeScreen";
 import SelectionScreen from "./components/SelectionScreen";
@@ -13,6 +16,15 @@ import CocktailScreen from "./components/CocktailScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [alcohol, setCocktail, setCocktailData, setStatus] = useCocktailStore(
+    (state) => [
+      state.alcohol,
+      state.setCocktail,
+      state.setCocktailData,
+      state.setStatus,
+    ]
+  );
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
@@ -37,7 +49,19 @@ export default function App() {
               />
             ),
             headerRight: () => (
-              <FontAwesome6 name="dice-six" size={32} color="white" />
+              <FontAwesome6
+                name="dice-six"
+                size={32}
+                color="white"
+                onPress={() =>
+                  fetchCocktail(
+                    alcohol,
+                    setCocktail,
+                    setCocktailData,
+                    setStatus
+                  )
+                }
+              />
             ),
             headerTitle: () => <NavHeader />,
             headerTransparent: true,
