@@ -2,64 +2,64 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useState, memo } from "react";
 
+import { useCocktailStore } from "../store/store";
+import fetchCocktail from "../library/fetchCocktail";
+
 import Button from "./Button";
 
-export default memo(function SelectionScreen({
-  navigation,
-  setCocktail,
-  setAlcoholType,
-}) {
+export default memo(function SelectionScreen({ navigation }) {
   const [active, setActive] = useState(-1);
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  let data = [];
+  const [
+    alcohol,
+    setAlcohol,
+    cocktail,
+    setCocktail,
+    cocktailData,
+    setCocktailData,
+    resetCocktailData,
+    status,
+    setStatus,
+  ] = useCocktailStore((state) => [
+    state.alcohol,
+    state.setAlcohol,
+    state.cocktail,
+    state.setCocktail,
+    state.cocktailData,
+    state.setCocktailData,
+    state.resetCocktailData,
+    state.status,
+    state.setStatus,
+  ]);
 
   const alcohols = [
-    { type: "Vodka", image: require("../assets/cocktail.jpg") },
-    { type: "Gin", image: require("../assets/cocktail.jpg") },
-    { type: "Whiskey", image: require("../assets/cocktail.jpg") },
-    { type: "Tequila", image: require("../assets/cocktail.jpg") },
-    { type: "Rum", image: require("../assets/cocktail.jpg") },
-    { type: "Brandy", image: require("../assets/cocktail.jpg") },
+    { type: "Vodka", image: require("../assets/vodka.png") },
+    { type: "Gin", image: require("../assets/gin.png") },
+    { type: "Whiskey", image: require("../assets/whiskey.png") },
+    { type: "Tequila", image: require("../assets/tequila.png") },
+    { type: "Rum", image: require("../assets/rum.png") },
+    { type: "Brandy", image: require("../assets/brandy.png") },
   ];
 
-  const getCocktailByIngredient = async (alcohol) => {
-    try {
-      const response = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${alcohol}`
-      );
-      const json = await response.json();
-      data.push(json["drinks"]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getCocktailById = async (id) => {
-    try {
-      const response = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
-      );
-      const json = await response.json();
-      setCocktail(json["drinks"]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const randomAlcohol = (data) => {
-    return data[0][Math.floor(Math.random() * data.length)];
-  };
-
   const buttonAction = async () => {
-    if (active > -1) {
-      await getCocktailByIngredient(alcohols[active]["type"]);
-      await getCocktailById(randomAlcohol(data)["idDrink"]);
-      setAlcoholType(alcohols[active]["type"]);
-      setActive(-1);
-      data = [];
-      navigation.navigate("Cocktail");
-    } else {
-      alert("Please make a selection");
+    if (status === "idle") {
+      if (active > -1) {
+        setIsDisabled(true);
+        resetCocktailData();
+        setAlcohol(alcohols[active]["type"]);
+        await fetchCocktail(
+          alcohols[active]["type"],
+          setCocktail,
+          setCocktailData,
+          setStatus
+        );
+        setActive(-1);
+        setIsDisabled(false);
+        navigation.navigate("Cocktail");
+      } else {
+        alert("Please make a selection");
+      }
     }
   };
   const handleSelect = (index) => {
@@ -91,7 +91,11 @@ export default memo(function SelectionScreen({
         ))}
       </View>
       <View style={styles.buttonContainer}>
-        <Button buttonText={"Search"} action={buttonAction} />
+        <Button
+          buttonText={"Search"}
+          action={buttonAction}
+          disabled={isDisabled}
+        />
       </View>
       <StatusBar style="auto" />
     </View>

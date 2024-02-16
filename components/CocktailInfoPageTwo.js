@@ -1,6 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 
-export default function CocktailInfoPageTwo({ cocktail }) {
+import { useCocktailStore } from "../store/store";
+
+export default function CocktailInfoPageTwo() {
+  const cocktail = useCocktailStore((state) => state.cocktail);
+
   return (
     <View>
       <View style={styles.instructionsContainer}>

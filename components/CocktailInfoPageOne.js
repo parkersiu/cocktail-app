@@ -1,8 +1,12 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { useEffect } from "react";
+
+import { useCocktailStore } from "../store/store";
 
 let ingredients = [];
 
 function findIngredients(cocktail) {
+  ingredients = [];
   // Loop through each property in the object
   for (const key in cocktail) {
     if (cocktail.hasOwnProperty(key)) {
@@ -34,30 +38,36 @@ function findIngredients(cocktail) {
   }
 }
 
-export default function CocktailInfoPageOne({ cocktail }) {
-  findIngredients(cocktail);
+export default function CocktailInfoPageOne() {
+  const cocktail = useCocktailStore((state) => state.cocktail);
+
+  useEffect(() => {
+    findIngredients(cocktail);
+  }, [cocktail]);
 
   return (
     <View>
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.descriptionHeader}>Description</Text>
-        <Text style={styles.descriptionBody}>
-          This classic cocktail is known for its combination of tequila, triple
-          sec, and lime juice, served in a salt-rimmed glass
-        </Text>
-      </View>
-      <View style={styles.line} />
-      <View style={styles.ingredientsContainer}>
-        <Text style={styles.ingredientsHeader}>Ingredients</Text>
-        <View style={styles.itemsContainer}>
-          {ingredients.map((item, i) => (
-            <Text
-              style={styles.ingredientsItems}
-              key={i}
-            >{`\u2022 ${item.measure} ${item.ingredient}`}</Text>
-          ))}
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.descriptionHeader}>Description</Text>
+          <Text style={styles.descriptionBody}>
+            This classic cocktail is known for its combination of tequila,
+            triple sec, and lime juice, served in a salt-rimmed glass
+          </Text>
         </View>
-      </View>
+        <View style={styles.line} />
+        <View style={styles.ingredientsContainer}>
+          <Text style={styles.ingredientsHeader}>Ingredients</Text>
+          <View style={styles.itemsContainer}>
+            {ingredients.map((item, i) => (
+              <Text
+                style={styles.ingredientsItems}
+                key={i}
+              >{`\u2022 ${item.measure} ${item.ingredient}`}</Text>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -96,5 +106,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomColor: "black",
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  scrollView: {
+    paddingBottom: 50,
   },
 });

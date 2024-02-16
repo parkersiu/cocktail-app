@@ -1,18 +1,17 @@
-import { View, Text, StyleSheet } from "react-native";
-import { Octicons } from "@expo/vector-icons";
+import { View, StyleSheet } from "react-native";
 import Swiper from "react-native-swiper";
 
 import CocktailHeader from "./CocktailHeader";
 import CocktailInfoPageOne from "./CocktailInfoPageOne";
 import CocktailInfoPageTwo from "./CocktailInfoPageTwo";
 
-export default function CocktailInfo({ cocktail, alcoholType }) {
+export default function CocktailInfo() {
   return (
     <View style={styles.mainContainer}>
-      <CocktailHeader cocktail={cocktail} alcoholType={alcoholType} />
+      <CocktailHeader />
       <Swiper horizontal={true} loop={false} showsPagination={true}>
-        <CocktailInfoPageOne cocktail={cocktail} />
-        <CocktailInfoPageTwo cocktail={cocktail} />
+        <CocktailInfoPageOne />
+        <CocktailInfoPageTwo />
       </Swiper>
     </View>
   );

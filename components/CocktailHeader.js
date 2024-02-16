@@ -1,13 +1,16 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 
-export default function CocktailHeader({ cocktail, alcoholType }) {
+import { useCocktailStore } from "../store/store";
+
+export default function CocktailHeader() {
+  const alcohol = useCocktailStore((state) => state.alcohol);
+  const cocktail = useCocktailStore((state) => state.cocktail);
+
   return (
     <>
       <View style={styles.header}>
-        <Text style={[styles.headerText, styles.headerLeft]}>
-          {alcoholType}
-        </Text>
+        <Text style={[styles.headerText, styles.headerLeft]}>{alcohol}</Text>
         <Text style={[styles.headerText, styles.headerRight]}>
           {cocktail["strGlass"]}
         </Text>
