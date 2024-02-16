@@ -69,9 +69,6 @@ export default function CombinedCocktailInfo() {
 }
 
 const styles = StyleSheet.create({
-  instructionsContainer: {
-    paddingVertical: 5,
-  },
   instructionsHeader: {
     fontSize: 18,
   },
