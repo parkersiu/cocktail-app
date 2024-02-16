@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   active: {
-    borderColor: "green",
-    borderWidth: 5,
+    borderColor: "black",
+    borderWidth: 2,
   },
 });
