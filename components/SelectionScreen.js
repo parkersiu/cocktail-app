@@ -34,12 +34,12 @@ export default memo(function SelectionScreen({ navigation }) {
   ]);
 
   const alcohols = [
-    { type: "Vodka", image: require("../assets/cocktail.jpg") },
-    { type: "Gin", image: require("../assets/cocktail.jpg") },
-    { type: "Whiskey", image: require("../assets/cocktail.jpg") },
-    { type: "Tequila", image: require("../assets/cocktail.jpg") },
-    { type: "Rum", image: require("../assets/cocktail.jpg") },
-    { type: "Brandy", image: require("../assets/cocktail.jpg") },
+    { type: "Vodka", image: require("../assets/vodka.png") },
+    { type: "Gin", image: require("../assets/gin.png") },
+    { type: "Whiskey", image: require("../assets/whiskey.png") },
+    { type: "Tequila", image: require("../assets/tequila.png") },
+    { type: "Rum", image: require("../assets/rum.png") },
+    { type: "Brandy", image: require("../assets/brandy.png") },
   ];
 
   const buttonAction = async () => {
