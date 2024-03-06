@@ -5,4 +5,5 @@ A mobile app to find randomized cocktail recipes. Select from 6 main alcohol typ
 ## Technologies
 
 React Native
+
 Expo
